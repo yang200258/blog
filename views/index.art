@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>青青的博客笔记</title>
+    <link rel="stylesheet" href="/www/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/www/css/index.css">
+    <script src="/www/js/jquery.js"> </script>
+    <script src="/www/js/template-web.js"> </script>
+    <script src="/www/js/bootstrap.min.js"> </script>
+    <script src="/www/js/index.js"></script>
+    <style>
+      .badge {
+        background-color: #5cb85c;
+      }
+    </style>
+</head>
+<body>
+
+  <!-- 头部开始 -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">博客笔记</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="请输入搜索内容">
+          </div>
+          <button type="submit" class="btn btn-default">搜索</button>
+        </form>
+
+        {{if islogin}}
+        <!-- 登录后状态 -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发起 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/article/add">文章</a></li>
+              <li><a href="javascript:;">问题</a></li>
+            </ul>
+          </li>
+            <div class="user_btn nav navbar-nav navbar-right navbar-form">
+              <button class="btn btn-warning">欢迎
+                <strong>{{user.nickname}}</strong></button>
+              <a class="btn btn-default" href="/logout" role="button">注销</a>
+            </div>
+          </ul>
+          {{/if}}
+          
+          {{if !islogin}}
+        <!-- 登录前状态 -->
+        <div class="user_btn navbar-nav navbar-right navbar-form">
+          <a class="btn btn-default" href="/loginPage" role="button">登录</a>
+          <a class="btn btn-default" href="/registerPage" role="button">注册</a>
+        </div>
+        {{/if}}
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+    <!-- 头部结束 -->
+  <!-- 文章部分开始 -->
+
+  <div class="article" style="margin: 10px">
+    <h2>文章详情</h2>
+    <hr>
+    <ul class="list-group">
+      {{each article}}
+      <li class="list-group-item">
+        <span class="badge">
+          发表时间: {{$value.ctime}}
+        </span>
+        <span class="badge">
+          昵称: {{$value.nickname}}
+        </span>
+        <a href="/article/info/{{$value.id}}">{{$value.title}}</a>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+
+  <!-- 分页开始部分 -->
+  <nav aria-label="Page navigation" style="margin: 10px">
+    <ul class="pagination">
+      <li>
+        {{if nowPage <= 1}}
+        <!-- <span  aria-label="Previous"> -->
+          <span aria-hidden="true">&laquo;</span>
+        <!-- </span> -->
+        {{else}}
+        <a href="?page={{nowPage - 1}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+        {{/if}}
+
+      </li>
+      {{each totalPage}}
+      {{if nowPage == $value}}
+      <li class="active"><a href="?page={{$value}}" >{{$value}}</a></li>
+      {{else}}
+      <li><a href="?page={{$value}}" >{{$value}}</a></li>
+      {{/if}}
+      {{/each}}
+      <li>
+        {{if nowPage >= maxPage}}
+        <!-- <a href="?page={{nowPage + 1}}" aria-label="Next"> -->
+          <span aria-hidden="true">&raquo;</span>
+        <!-- </a> -->
+        {{else}}
+        <a href="?page={{nowPage + 1}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+        {{/if}}
+      </li>
+    </ul>
+  </nav>
+
+  <!-- 设置分页显示条数 -->
+  <form class="form-inline countform" style="margin-left: 10px">
+    <div class="form-group">
+      <label for="exampleInputName2">每页显示</label>
+      <input type="text" class="form-control" id="exampleInputName2"><label for="exampleInputName2">条</label>
+    </div>
+    <a class="btn btn-default setBtn">设置</a>
+  </form>
+
+  <!-- 分页结束 -->
+
+
+
+  <!-- 尾部开始 -->
+  <div class="footer">
+    青青的博客笔记  @  2018
+  </div>
+  <!-- 尾部结束 -->
+<script>
+  $(function() {
+    $('.setBtn').on('click',function(){
+      var acount = $('.countform').find('input[type=text]').val();
+      $('.setBtn').attr("href","?acount=" + acount);
+    });
+    
+  });
+</script>
+</body>
+</html>

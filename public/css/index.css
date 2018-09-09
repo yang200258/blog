@@ -1,0 +1,30 @@
+.user_btn a {
+    display: inline-block;
+    background-color: #5cb85c;
+    color: #fff;
+}
+.user_btn a:hover {
+    display: inline-block;
+    background-color: #5bc0de;
+    color: #fff;
+}
+.footer {
+    color: #ccc;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    background-color: #eee;
+    font-size: 18px;
+    letter-spacing: 10px;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+}
+
+.active {
+    background-color: #ddd;
+}
